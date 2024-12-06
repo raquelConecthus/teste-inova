@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import conecthusLogo from './assets/logo_conectus.png'
+import salcompLogo from './assets/logo_salcomp.png'
 import './App.css'
 
 function App() {
@@ -9,24 +9,25 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+        <a href="https://www.conecthus.org.br/" target="_blank">
+          <img src={conecthusLogo} className="logo" alt="Vite logo"  />
         </a>
         <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+          <img src={salcompLogo} className="logo react" alt="React logo"/>
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Gerenciamento de NPI</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
+        <button onClick={() => setCount((count) => count + 1)}>
+          Entrar
+        </button>
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+      <a href="https://github.com/raquelConecthus/teste-inova" target="_blank">Link do repositorio</a>
+
       </p>
     </>
   )
