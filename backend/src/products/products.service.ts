@@ -24,12 +24,15 @@ export class ProductsService {
 
   async findOne(id: string) {
     console.log(`This action returns a #${id} product`);
-    return this.productRepository.findOneBy({ id });
+    const product = await this.productRepository.findOneBy({ id });
+    if (!product) return null;
+    return product;
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
     console.log(`This action updates a #${id} product`);
     const product = await this.findOne(id);
+    if (!product) return null;
     this.productRepository.merge(product, updateProductDto);
     return this.productRepository.save(product);
   }
@@ -37,6 +40,7 @@ export class ProductsService {
   async remove(id: string) {
     console.log(`This action removes a #${id} product`);
     const product = await this.findOne(id);
+    if (!product) return null;
     return this.productRepository.remove(product);
   }
 }

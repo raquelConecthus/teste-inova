@@ -1,3 +1,4 @@
+import { IsNotEmpty, IsString } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -18,10 +19,10 @@ export class Product {
   approver: string;
 
   @Column('datetime')
-  startDate: string;
+  startDate: Date;
 
   @Column('datetime')
-  endDate: string;
+  endDate: Date;
 
   @Column()
   productFamily: string;
