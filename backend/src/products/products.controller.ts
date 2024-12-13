@@ -12,6 +12,7 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 
 @Controller('products')
 export class ProductsController {
@@ -22,6 +23,7 @@ export class ProductsController {
     return this.productsService.create(createProductDto);
   }
 
+  @IsPublic()
   @Get()
   async findAll() {
     try {
@@ -32,6 +34,7 @@ export class ProductsController {
     }
   }
 
+  @IsPublic()
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const product = await this.productsService.findOne(id);

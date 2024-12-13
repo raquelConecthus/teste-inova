@@ -24,8 +24,11 @@ export class UsersService {
     return { ...savedUser, password: undefined };
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    console.log(`This action returns all users`);
+    const data = await this.userRepository.find();
+    data.map((user) => (user.password = undefined));
+    return data;
   }
 
   findByEmail(email: string) {
@@ -34,11 +37,21 @@ export class UsersService {
     return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    console.log(`This action updates a #${id} user`);
+    const user = await this.userRepository.findOneBy({ id });
+    if (!user) return null;
+    this.userRepository.merge(user, updateUserDto);
+
+    const savedUser = await this.userRepository.save(user);
+    return { ...savedUser, password: undefined };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    console.log(`This action removes a #${id} user`);
+    const user = await this.userRepository.findOneBy({ id });
+
+    if (!user) return null;
+    return this.userRepository.remove(user);
   }
 }

@@ -19,6 +19,7 @@ export class CreateProductDto {
   @IsNotEmpty()
   startDate: string;
 
+  @IsNotEmpty()
   endDate: string;
 
   @IsString()
