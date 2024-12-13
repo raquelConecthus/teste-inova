@@ -27,20 +27,20 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       return true;
     }
 
-    const canActivate = super.canActivate(context);
+    try {
+      const canActivate = super.canActivate(context);
 
-    if (typeof canActivate === 'boolean') {
-      return canActivate;
-    }
-
-    const canActivatePromise = canActivate as Promise<boolean>;
-
-    return canActivatePromise.catch((error) => {
-      if (error) {
-        throw new Error('error.message');
+      if (typeof canActivate === 'boolean') {
+        return canActivate;
       }
 
-      throw new BadGatewayException();
-    });
+      return (canActivate as Promise<boolean>).catch((error) => {
+        console.error('JWT validation error:', error.message); // Log para debug
+        throw new UnauthorizedException('Invalid or missing token');
+      });
+    } catch (error) {
+      console.error('Unexpected error in JwtAuthGuard:', error.message);
+      throw new UnauthorizedException('Invalid or missing token');
+    }
   }
 }

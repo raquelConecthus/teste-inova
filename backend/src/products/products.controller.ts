@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   NotFoundException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -22,8 +23,13 @@ export class ProductsController {
   }
 
   @Get()
-  findAll() {
-    return this.productsService.findAll();
+  async findAll() {
+    try {
+      return await this.productsService.findAll();
+    } catch (error) {
+      console.error('Controller error:', error.message);
+      throw new InternalServerErrorException('Could not retrieve products');
+    }
   }
 
   @Get(':id')

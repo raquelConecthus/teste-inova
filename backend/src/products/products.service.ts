@@ -1,4 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Repository } from 'typeorm';
@@ -19,7 +23,16 @@ export class ProductsService {
 
   async findAll() {
     console.log(`This action returns all products`);
-    return this.productRepository.find();
+    try {
+      const products = await this.productRepository.find();
+      if (!products || products.length === 0) {
+        throw new InternalServerErrorException('No products found');
+      }
+      return products;
+    } catch (error) {
+      console.error('Error fetching products:', error.message);
+      throw new InternalServerErrorException('Failed to fetch products');
+    }
   }
 
   async findOne(id: string) {
