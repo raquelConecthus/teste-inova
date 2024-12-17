@@ -13,15 +13,15 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string) {
-    const user = await this.userService.findByEmail(email);
-    if (user) {
-      const isPasswordValid = await bcrypt.compare(password, user.password);
+  // async validateUser(email: string, password: string) {
+  //   const user = await this.userService.findByEmail(email);
+  //   if (user) {
+  //     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-      if (isPasswordValid) return { ...user, password: undefined };
-    }
-    throw new Error('Email address or password provided is incorrect');
-  }
+  //     if (isPasswordValid) return { ...user, password: undefined };
+  //   }
+  //   throw new Error('Email address or password provided is incorrect');
+  // }
 
   login(user: Users): UserToken {
     const payload: UserPayload = {

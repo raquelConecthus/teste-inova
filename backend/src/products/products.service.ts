@@ -10,10 +10,7 @@ import { Product } from './entities/product.entity';
 
 @Injectable()
 export class ProductsService {
-  constructor(
-    @Inject('PRODUCT_REPOSITORY')
-    private productRepository: Repository<Product>,
-  ) {}
+  constructor(private productRepository: Repository<Product>) {}
 
   async create(createProductDto: CreateProductDto) {
     console.log('This action adds a new product');
