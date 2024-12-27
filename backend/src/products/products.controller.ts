@@ -36,7 +36,7 @@ export class ProductsController {
 
   @IsPublic()
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: number) {
     const product = await this.productsService.findOne(id);
     if (!product) throw new NotFoundException();
     return product;
@@ -44,7 +44,7 @@ export class ProductsController {
 
   @Patch(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateProductDto: UpdateProductDto,
   ) {
     const product = await this.productsService.update(id, updateProductDto);
@@ -53,7 +53,7 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: number) {
     const product = await this.productsService.remove(id);
     if (!product) throw new NotFoundException();
     return {

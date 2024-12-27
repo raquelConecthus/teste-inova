@@ -10,7 +10,7 @@ import { PrismaModule } from 'prisma/prisma.module';
 import { MailModule } from './email/email.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, PrismaModule, MailModule],
+  imports: [UsersModule, AuthModule, PrismaModule, MailModule, ProductsModule],
   controllers: [AppController],
   providers: [
     AppService,
