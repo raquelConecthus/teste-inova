@@ -20,10 +20,13 @@ export class ProductsService {
     return product;
   }
 
-  async findAll() {
+  async findAll(page, limit) {
     console.log(`This action returns all products`);
     try {
-      const products = await this.prisma.product.findMany();
+      const products = await this.prisma.product.findMany({
+        skip: limit * (page - 1),
+        take: limit,
+      });
       if (!products || products.length === 0) {
         throw new InternalServerErrorException('No products found');
       }

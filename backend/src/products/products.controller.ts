@@ -8,11 +8,13 @@ import {
   Delete,
   NotFoundException,
   InternalServerErrorException,
+  Query,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
+import { ApiBody, ApiParam } from '@nestjs/swagger';
 
 @Controller('products')
 export class ProductsController {
@@ -25,9 +27,13 @@ export class ProductsController {
 
   @IsPublic()
   @Get()
-  async findAll() {
+  async findAll(@Query() query) {
     try {
-      return await this.productsService.findAll();
+      const { page, limit } = query;
+      const pageInt = parseInt(page);
+      const limitInt = parseInt(limit);
+
+      return await this.productsService.findAll(pageInt, limitInt);
     } catch (error) {
       console.error('Controller error:', error.message);
       throw new InternalServerErrorException('Could not retrieve products');
@@ -43,6 +49,8 @@ export class ProductsController {
   }
 
   @Patch(':id')
+  @ApiParam({ name: 'id', description: 'Product ID', example: 1 })
+  @ApiBody({ type: UpdateProductDto })
   async update(
     @Param('id') id: number,
     @Body() updateProductDto: UpdateProductDto,
