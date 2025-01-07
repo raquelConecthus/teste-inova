@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CurrentUser } from './auth/decorators/current-user.decorator';
 import { Users } from './users/entities/user.entity';
+import { IsPublic } from './auth/decorators/is-public.decorator';
 
 @Controller()
 export class AppController {
@@ -10,6 +11,11 @@ export class AppController {
   @Get('me')
   getMe(@CurrentUser() user: Users) {
     return user;
+  }
+  @IsPublic()
+  @Get('')
+  getHello(@CurrentUser() user: Users) {
+    return 'Hello from Teste Inova';
   }
 
   @Post('welcome-email')

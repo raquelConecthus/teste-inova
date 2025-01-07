@@ -1,6 +1,9 @@
+import { UserRoles } from './UserPayload';
+
 export interface UserFromJwt {
   id: number;
   email: string;
   name: string;
-  department: number;
+  departmentId: number;
+  userRoles: UserRoles[];
 }

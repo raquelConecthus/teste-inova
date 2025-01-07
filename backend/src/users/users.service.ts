@@ -61,6 +61,33 @@ export class UsersService {
     return allUsers;
   }
 
+  async getByLogin(email: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email, // Busca apenas pelo email
+      },
+      include: {
+        userRoles: {
+          // Relação com a tabela User_Roles
+          include: {
+            role: {
+              // Relação com a tabela Role
+              include: {
+                permission: true, // Relação com a tabela Permission
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  }
+
   // async update(id: string, updateUserDto: UpdateUserDto) {
   //   console.log(`This action updates a #${id} user`);
   //   const user = await this.userRepository.findOneBy({ id });

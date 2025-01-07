@@ -24,12 +24,16 @@ export class AuthService {
     throw new Error('Email address or password provided is incorrect');
   }
 
-  login(user: CreateUserDto): UserToken {
+  async login(user: CreateUserDto): Promise<UserToken> {
+    const userLogin = await this.userService.getByLogin(user.email);
+    // console.log(userLogin);
+    // console.log(userLogin.userRoles[0]);
     const payload: UserPayload = {
       email: user.email,
       sub: user.id,
       name: user.name,
-      department: user.departmentId,
+      userRoles: userLogin.userRoles,
+      departmentId: user.departmentId,
     };
 
     const jwtToken = this.jwtService.sign(payload);
