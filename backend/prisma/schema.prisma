@@ -13,52 +13,73 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Department {
+  id   Int    @id @default(autoincrement())
+  name String
+  users User[]
+}
+
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String
   password String
-  profile_id              Int?
-  PROFILE                 Profile?     @relation(fields: [profile_id], references: [id])
- 
+  department Department @relation(fields: [departmentId], references: [id])
+  departmentId Int
+
+  userRoles User_Roles[]
+
+  createdProducts Product[]  @relation("ProductCreator")
+  approvedProducts Product[] @relation("ProductApprover")
+}
+
+model User_Roles {
+   id    Int     @id @default(autoincrement())
+   userId Int 
+   user User @relation(fields: [userId], references: [id])
+   roleId Int 
+   role Role @relation(fields: [roleId], references: [id])
+   phaseId Int 
+   phase Phase @relation(fields: [phaseId], references: [id])
+}
+
+model Phase {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  userRoles User_Roles[]
+
+}
+
+model Role{
+  id Int     @id @default(autoincrement())
+  name String
+  permission Permission @relation(fields: [permissionId], references: [id])
+  permissionId Int @unique
+  userRoles User_Roles[]
+}
+
+model Permission {
+  id Int     @id @default(autoincrement())
+  role Role?
+  can_create Boolean
+  can_read Boolean
+  can_update Boolean
+  can_delete Boolean
+  can_approve Boolean
+
 }
 
 model Product {
-  id    Int     @id @default(autoincrement())
-  name  String
-  code  String
-  creator String
-  approver String
-  startDate String
-  endDate String
+  id            Int    @id @default(autoincrement())
+  name          String
+  code          String
+  creatorId     Int
+  approverId    Int
+  startDate     DateTime
+  endDate       DateTime
   productFamily String
-  finalGood String
-}
-
-model Profile {
-  id                  Int                   @id @default(autoincrement())
-  name                String?               @db.VarChar(100)
-  status              Int?                  @db.TinyInt
-  identifier          String?               @db.VarChar(100)
-  code                Int?
-  updated_at          DateTime?             @db.DateTime()
-  USER                User[]
-  Profile_Transaction Profile_Transaction[]
-}
-
-model Profile_Transaction {
-  id             Int          @id @default(autoincrement())
-  profile_id     Int?
-  transaction_id Int?
-  PROFILE        Profile?     @relation(fields: [profile_id], references: [id], map: "fk_PROFILE_TRANSACTION_PROFILE")
-  TRANSACTION    Transaction? @relation(fields: [transaction_id], references: [id], map: "fk_PROFILE_TRANSACTION_TRANSACTION")
-
-  @@index([profile_id], map: "fk_PROFILE_TRANSACTION_PROFILE")
-  @@index([transaction_id], map: "fk_PROFILE_TRANSACTION_TRANSACTION")
-}
-model Transaction {
-  id                  Int                   @id @default(autoincrement())
-  number              Decimal?              @db.Decimal(10, 0)
-  status              Int?                  @db.TinyInt
-  Profile_Transaction Profile_Transaction[]
+  finalGood     String
+  creator       User   @relation("ProductCreator", fields: [creatorId], references: [id])
+  approver      User   @relation("ProductApprover", fields: [approverId], references: [id])
 }

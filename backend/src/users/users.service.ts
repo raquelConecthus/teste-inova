@@ -27,7 +27,12 @@ export class UsersService {
 
     try {
       const data: Prisma.UserCreateInput = {
-        ...createUserDto,
+        email: createUserDto.email,
+
+        name: createUserDto.name,
+        department: {
+          connect: { id: createUserDto.departmentId }, // Relacionando o departamento
+        },
         password: await bcrypt.hash(createUserDto.password, 10),
       };
 

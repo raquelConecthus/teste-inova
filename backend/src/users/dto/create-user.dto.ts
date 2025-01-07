@@ -2,6 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Users } from '../entities/user.entity';
 import {
   IsEmail,
+  IsInt,
+  IsNotEmpty,
   IsString,
   Matches,
   MaxLength,
@@ -28,4 +30,9 @@ export class CreateUserDto extends Users {
   @IsString()
   @ApiProperty()
   name: string;
+
+  @IsNotEmpty()
+  @IsInt()
+  @ApiProperty()
+  departmentId: number;
 }

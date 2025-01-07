@@ -5,6 +5,7 @@ import { Users } from 'src/users/entities/user.entity';
 import { UserPayload } from './models/UserPayload';
 import { JwtService } from '@nestjs/jwt';
 import { UserToken } from './models/UserToken';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -13,21 +14,22 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  // async validateUser(email: string, password: string) {
-  //   const user = await this.userService.findByEmail(email);
-  //   if (user) {
-  //     const isPasswordValid = await bcrypt.compare(password, user.password);
+  async validateUser(email: string, password: string) {
+    const user = await this.userService.findByEmail(email);
+    if (user) {
+      const isPasswordValid = await bcrypt.compare(password, user.password);
 
-  //     if (isPasswordValid) return { ...user, password: undefined };
-  //   }
-  //   throw new Error('Email address or password provided is incorrect');
-  // }
+      if (isPasswordValid) return { ...user, password: undefined };
+    }
+    throw new Error('Email address or password provided is incorrect');
+  }
 
-  login(user: Users): UserToken {
+  login(user: CreateUserDto): UserToken {
     const payload: UserPayload = {
       email: user.email,
       sub: user.id,
       name: user.name,
+      department: user.departmentId,
     };
 
     const jwtToken = this.jwtService.sign(payload);

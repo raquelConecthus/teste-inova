@@ -9,16 +9,19 @@ import {
   NotFoundException,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AccessControlGuard } from 'src/access-control/access-control.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @UseGuards(AccessControlGuard)
   async create(@Body() createUserDto: CreateUserDto) {
     try {
       const user = await this.usersService.create(createUserDto);
@@ -37,6 +40,7 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(AccessControlGuard)
   findAll() {
     return this.usersService.findAll();
   }
