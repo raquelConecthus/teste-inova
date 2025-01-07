@@ -14,14 +14,14 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { AccessControlGuard } from 'src/access-control/access-control.guard';
+import { AccessGuard } from 'src/access-control/access-control.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @UseGuards(AccessControlGuard)
+  @UseGuards(AccessGuard(1, 1))
   async create(@Body() createUserDto: CreateUserDto) {
     try {
       const user = await this.usersService.create(createUserDto);
@@ -40,7 +40,7 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(AccessControlGuard)
+  @UseGuards(AccessGuard(2, 3))
   findAll() {
     return this.usersService.findAll();
   }

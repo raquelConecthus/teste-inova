@@ -67,17 +67,7 @@ export class UsersService {
         email, // Busca apenas pelo email
       },
       include: {
-        userRoles: {
-          // Relação com a tabela User_Roles
-          include: {
-            role: {
-              // Relação com a tabela Role
-              include: {
-                permission: true, // Relação com a tabela Permission
-              },
-            },
-          },
-        },
+        userRoles: true,
       },
     });
 
