@@ -8,9 +8,21 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { PrismaModule } from 'prisma/prisma.module';
 import { MailModule } from './email/email.module';
+import { MulterModule } from '@nestjs/platform-express';
+import { FileModule } from './file/file.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, PrismaModule, MailModule, ProductsModule],
+  imports: [
+    UsersModule,
+    AuthModule,
+    PrismaModule,
+    MailModule,
+    ProductsModule,
+    MulterModule.register({
+      dest: './uploads', // Diretório onde os arquivos serão salvos
+    }),
+    FileModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
