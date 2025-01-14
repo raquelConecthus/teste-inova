@@ -67,7 +67,11 @@ export class UsersService {
         email, // Busca apenas pelo email
       },
       include: {
-        userRoles: true,
+        userRoles: {
+          include: {
+            permission: true,
+          },
+        },
       },
     });
 

@@ -15,33 +15,34 @@ async function main() {
   });
 
   // Users
-  const user1 = await prisma.user.create({
-    data: {
-      name: 'Raquel',
-      email: 'raq@email.com',
-      password: '123',
-      departmentId: vendas.id,
-    },
-  });
-  const user2 = await prisma.user.create({
-    data: {
-      name: 'Harley',
-      email: 'har@email.com',
-      password: '123',
-      departmentId: engenharia.id,
-    },
-  });
-  const user3 = await prisma.user.create({
-    data: {
-      name: 'Lucas',
-      email: 'luc@email.com',
-      password: '123',
-      departmentId: sourcing.id,
-    },
-  });
+  // const user1 = await prisma.user.create({
+  //   data: {
+  //     name: 'Raquel',
+  //     email: 'raq@email.com',
+  //     password: '123',
+  //     departmentId: vendas.id,
+  //   },
+  // });
+  // const user2 = await prisma.user.create({
+  //   data: {
+  //     name: 'Harley',
+  //     email: 'har@email.com',
+  //     password: '123',
+  //     departmentId: engenharia.id,
+  //   },
+  // });
+  // const user3 = await prisma.user.create({
+  //   data: {
+  //     name: 'Lucas',
+  //     email: 'luc@email.com',
+  //     password: '123',
+  //     departmentId: sourcing.id,
+  //   },
+  // });
 
   const creatorPermission = await prisma.permission.create({
     data: {
+      name: 'Criador',
       can_create: true,
       can_read: true,
       can_update: true,
@@ -52,6 +53,7 @@ async function main() {
 
   const adminPermission = await prisma.permission.create({
     data: {
+      name: 'Admin',
       can_create: true,
       can_read: true,
       can_update: true,
@@ -62,38 +64,12 @@ async function main() {
 
   const approverPermission = await prisma.permission.create({
     data: {
+      name: 'Aprovador',
       can_create: false,
       can_read: true,
       can_update: false,
       can_delete: false,
       can_approve: true,
-    },
-  });
-
-  const creatorRole = await prisma.role.create({
-    data: {
-      name: 'Criador',
-      permission: {
-        connect: { id: creatorPermission.id },
-      },
-    },
-  });
-
-  const adminRole = await prisma.role.create({
-    data: {
-      name: 'Admin',
-      permission: {
-        connect: { id: adminPermission.id },
-      },
-    },
-  });
-
-  const approverRole = await prisma.role.create({
-    data: {
-      name: 'Aprovador',
-      permission: {
-        connect: { id: approverPermission.id },
-      },
     },
   });
 
@@ -115,22 +91,6 @@ async function main() {
       name: 'Development',
       description: 'Desenvolvimento',
     },
-  });
-
-  // User Roles
-  await prisma.user_Roles.createMany({
-    data: [
-      {
-        userId: user1.id,
-        roleId: approverRole.id,
-        phaseId: phase1.id,
-      },
-      {
-        userId: user2.id,
-        roleId: creatorRole.id,
-        phaseId: phase3.id,
-      },
-    ],
   });
 
   console.log('Seed data created successfully!');

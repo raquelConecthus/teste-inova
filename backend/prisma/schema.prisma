@@ -37,8 +37,8 @@ model User_Roles {
    id    Int     @id @default(autoincrement())
    userId Int 
    user User @relation(fields: [userId], references: [id])
-   roleId Int 
-   role Role @relation(fields: [roleId], references: [id])
+   permissionId Int 
+   permission Permission @relation(fields: [permissionId], references: [id])
    phaseId Int 
    phase Phase @relation(fields: [phaseId], references: [id])
 }
@@ -51,17 +51,12 @@ model Phase {
 
 }
 
-model Role{
-  id Int     @id @default(autoincrement())
-  name String
-  permission Permission @relation(fields: [permissionId], references: [id])
-  permissionId Int @unique
-  userRoles User_Roles[]
-}
+
 
 model Permission {
   id Int     @id @default(autoincrement())
-  role Role?
+  name String
+  userRoles User_Roles[]
   can_create Boolean
   can_read Boolean
   can_update Boolean

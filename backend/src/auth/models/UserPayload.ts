@@ -12,6 +12,6 @@ export interface UserPayload {
 
 export interface UserRoles {
   id: number;
-  roleId: number;
+  permissionId: number;
   phaseId: number;
 }

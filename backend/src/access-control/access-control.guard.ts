@@ -1,14 +1,18 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Permission } from '@prisma/client';
 import { Observable } from 'rxjs';
 
-export function AccessGuard(role: number, phase: number) {
+export function AccessGuard(
+  requiredPermission: keyof Permission,
+  phase: number,
+) {
   @Injectable()
   class AccessControlGuard implements CanActivate {
-    canActivate(
-      context: ExecutionContext,
-    ): boolean | Promise<boolean> | Observable<boolean> {
+    async canActivate(context: ExecutionContext): Promise<boolean> {
       const request = context.switchToHttp().getRequest();
       const user = request.user;
+
+      // Certifique-se de que o `user` contém os `userRoles` com permissões carregadas
       const userRoles = user.userRoles;
       console.log(userRoles);
 
@@ -16,9 +20,16 @@ export function AccessGuard(role: number, phase: number) {
         return false;
       }
 
-      const hasAccess = userRoles.some(
-        (userRole) => userRole.roleId === role && userRole.phaseId === phase,
-      );
+      const hasAccess = userRoles.some((userRole) => {
+        // Verifique se a fase coincide
+        if (userRole.phaseId !== phase) {
+          return false;
+        }
+
+        // Verifique se a permissão necessária está disponível
+        const permission = userRole.permission;
+        return permission && permission[requiredPermission] === true;
+      });
 
       return hasAccess;
     }

@@ -10,6 +10,7 @@ import { PrismaModule } from 'prisma/prisma.module';
 import { MailModule } from './email/email.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { FileModule } from './file/file.module';
+import { PermissionModule } from './permission/permission.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { FileModule } from './file/file.module';
       dest: './uploads', // Diretório onde os arquivos serão salvos
     }),
     FileModule,
+    PermissionModule,
   ],
   controllers: [AppController],
   providers: [
