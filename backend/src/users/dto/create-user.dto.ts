@@ -10,9 +10,9 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class CreateUserDto extends Users {
+export class CreateUserDto {
   @ApiProperty()
-  id: number;
+  id?: number;
 
   @IsEmail()
   @ApiProperty()

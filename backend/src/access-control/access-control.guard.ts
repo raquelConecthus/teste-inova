@@ -12,7 +12,6 @@ export function AccessGuard(
       const request = context.switchToHttp().getRequest();
       const user = request.user;
 
-      // Certifique-se de que o `user` contém os `userRoles` com permissões carregadas
       const userRoles = user.userRoles;
       console.log(userRoles);
 
@@ -21,14 +20,12 @@ export function AccessGuard(
       }
 
       const hasAccess = userRoles.some((userRole) => {
-        // Verifique se a fase coincide
         if (userRole.phaseId !== phase) {
           return false;
         }
 
-        // Verifique se a permissão necessária está disponível
         const permission = userRole.permission;
-        return permission && permission[requiredPermission] === true;
+        return permission && permission[requiredPermission];
       });
 
       return hasAccess;

@@ -2,7 +2,7 @@
 /dist
 /node_modules
 /build
-/uploads_doc
+/uploads
 
 # Logs
 logs

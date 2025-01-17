@@ -11,6 +11,7 @@ import { MailModule } from './email/email.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { FileModule } from './file/file.module';
 import { PermissionModule } from './permission/permission.module';
+import { AccessControlModule } from './access-control/access-control.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { PermissionModule } from './permission/permission.module';
     }),
     FileModule,
     PermissionModule,
+    AccessControlModule,
   ],
   controllers: [AppController],
   providers: [

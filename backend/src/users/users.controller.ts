@@ -10,6 +10,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AccessGuard } from 'src/access-control/access-control.guard';
+import { PermissionService } from 'src/permission/permission.service';
 
 @Controller('users')
 export class UsersController {
