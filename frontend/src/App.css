@@ -7,7 +7,7 @@
 }
 
 .logo {
-  height: 4em;
+  height: 3em;
   will-change: filter;
   transition: filter 300ms;
   margin-left: 1em;
@@ -28,15 +28,21 @@
   }
 }
 
-
-
 .card {
   padding: 2em;
-  height: 50vh;
+  height: 60vh;
   border: 1px solid gray;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .read-the-docs {
   color: #888;
+}
+
+.links {
+  display: flex;
+  gap: 2em;
 }
