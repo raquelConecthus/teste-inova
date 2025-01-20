@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { CreateAccessDto } from './dto/create-access.dto';
 import { AccessControlService } from './access-control.service';
@@ -30,5 +30,11 @@ export class AccessControlController {
       createdPermissions,
       userId,
     );
+  }
+
+  @Get('list')
+  async listCredentials(@Query('page') page: number) {
+    if (!page) page = 1;
+    return await this.usersPermissionService.listCredentials(page);
   }
 }
