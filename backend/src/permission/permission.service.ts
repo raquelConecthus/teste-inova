@@ -15,8 +15,13 @@ export class PermissionService {
     return createdPermission;
   }
 
-  findAll() {
-    return `This action returns all permission`;
+  async findAll(page) {
+    const pageSize = 10;
+    const skip = (page - 1) * pageSize;
+    return await this.prisma.permission.findMany({
+      skip,
+      take: pageSize,
+    });
   }
 
   async findOne(id: number) {
