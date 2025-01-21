@@ -4,6 +4,7 @@ import { CreateAccessDto } from './dto/create-access.dto';
 import { AccessControlService } from './access-control.service';
 import { PermissionService } from 'src/permission/permission.service';
 import { UsersPermissionService } from './users-permission.service';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 
 @Controller('access-control')
 export class AccessControlController {
@@ -12,6 +13,7 @@ export class AccessControlController {
     private readonly usersPermissionService: UsersPermissionService,
   ) {}
   @Post()
+  @IsPublic()
   async create(@Body() createAccessDto: CreateAccessDto) {
     const { permissions } = createAccessDto;
     const { name, email, password, departmentId } = createAccessDto;

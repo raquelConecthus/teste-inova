@@ -22,7 +22,7 @@ export class AppController {
   }
   @IsPublic()
   @Get('')
-  getHello(@CurrentUser() user: Users) {
+  getHello() {
     return 'Hello from Teste Inova';
   }
 

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Users } from "./pages/Users";
 import { Permissions } from "./pages/Permissions";
+import { CreateCredential } from "./pages/CreateCredential";
 
 function App() {
   return (
@@ -30,12 +31,16 @@ function App() {
           <Link to="/permissions">
             <button>Permissions</button>
           </Link>
+          <Link to="/create-credential">
+            <button>Create Credential</button>
+          </Link>
         </div>
 
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/users" element={<Users />} />
           <Route path="/permissions" element={<Permissions />} />
+          <Route path="/create-credential" element={<CreateCredential />} />
         </Routes>
       </div>
       <p className="read-the-docs">
