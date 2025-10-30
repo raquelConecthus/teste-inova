@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { api } from "../api/api";
+import Calendar from "./Calendar";
 
 export function Home() {
   const [response, setResponse] = useState<string | null>(null);
@@ -27,7 +28,8 @@ export function Home() {
       <h2>Home</h2>
       {loading && <p>Carregando...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {response && <div>{JSON.stringify(response, null, 2)}</div>}
+      {/* {response && <div>{JSON.stringify(response, null, 2)}</div>} */}
+      <Calendar />
     </>
   );
 }

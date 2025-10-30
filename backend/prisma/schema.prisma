@@ -52,7 +52,6 @@ model Phase {
 }
 
 
-
 model Permission {
   id Int     @id @default(autoincrement())
   name String

@@ -30,8 +30,8 @@ export class ProductsController {
   async findAll(@Query() query) {
     try {
       const { page, limit } = query;
-      const pageInt = parseInt(page);
-      const limitInt = parseInt(limit);
+      const pageInt = parseInt(page) || 1;
+      const limitInt = parseInt(limit) || 10;
 
       return await this.productsService.findAll(pageInt, limitInt);
     } catch (error) {

@@ -7,37 +7,41 @@ import { Home } from "./pages/Home";
 import { Users } from "./pages/Users";
 import { Permissions } from "./pages/Permissions";
 import { CreateCredential } from "./pages/CreateCredential";
+import { Dashboard } from "./pages/Dashboard";
 
 function App() {
   return (
     <Router>
-      <div>
+      {/* <div>
         <a href="https://www.conecthus.org.br/" target="_blank">
           <img src={conecthusLogo} className="logo" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={salcompLogo} className="logo react" alt="React logo" />
         </a>
+      </div> */}
+      {/* <h2>Gerenciamento de NPI</h2> */}
+      <div className="links">
+        <Link to="/">
+          <button>Dashboard</button>
+        </Link>
+        <Link to="/home">
+          <button>Home</button>
+        </Link>
+        <Link to="/users">
+          <button>Users</button>
+        </Link>
+        <Link to="/permissions">
+          <button>Permissions</button>
+        </Link>
+        <Link to="/create-credential">
+          <button>Create Credential</button>
+        </Link>
       </div>
-      <h2>Gerenciamento de NPI</h2>
       <div className="card">
-        <div className="links">
-          <Link to="/">
-            <button>Home</button>
-          </Link>
-          <Link to="/users">
-            <button>Users</button>
-          </Link>
-          <Link to="/permissions">
-            <button>Permissions</button>
-          </Link>
-          <Link to="/create-credential">
-            <button>Create Credential</button>
-          </Link>
-        </div>
-
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/users" element={<Users />} />
           <Route path="/permissions" element={<Permissions />} />
           <Route path="/create-credential" element={<CreateCredential />} />

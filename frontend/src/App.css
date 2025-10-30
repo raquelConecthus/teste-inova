@@ -1,7 +1,7 @@
 #root {
-  max-width: 1280px;
+  max-width: 90vw;
   width: 100vw;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 2rem;
   text-align: center;
 }
@@ -30,8 +30,9 @@
 
 .card {
   padding: 2em;
-  height: 60vh;
-  border: 1px solid gray;
+  /* height: 60vh; */
+  width: 100%;
+  /* border: 1px solid gray; */
   border-radius: 10px;
   display: flex;
   flex-direction: column;
